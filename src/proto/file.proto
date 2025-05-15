@@ -1,0 +1,44 @@
+syntax = "proto3";
+package file;
+
+service FileService {
+  rpc UploadFile(UploadFileRequest)       returns (UploadFileResponse);
+  rpc ListFilesByCategory(CategoryRequest) returns (FileListResponse);
+  rpc DeleteFile(DeleteFileRequest)       returns (OperationStatus);
+}
+
+message UploadFileRequest {
+  string category = 1;
+  string filename = 2;
+  bytes  data     = 3;
+}
+
+message UploadFileResponse {
+  int32  fileId = 1;
+  string url    = 2;
+}
+
+message CategoryRequest {
+  string category = 1;
+}
+
+message DeleteFileRequest {
+  int32 fileId = 1;
+}
+
+message FileMeta {
+  int32  fileId    = 1;
+  string category  = 2;
+  string filename  = 3;
+  string url       = 4;
+  string createdAt = 5;
+}
+
+message FileListResponse {
+  repeated FileMeta files = 1;
+}
+
+message OperationStatus {
+  bool   success = 1;
+  string message = 2;
+}
